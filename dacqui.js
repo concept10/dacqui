@@ -1,8 +1,9 @@
-// dataAcquisitionRuntime.js
-const EventEmitter = require('events');
+// dacqui.js
+
+const { RuntimeEvents, EVENTS } = require('./events');
 const TransportFactory = require('./transportFactory');
 
-class dacqui extends EventEmitter {
+class Dacqui extends RuntimeEvents {
   constructor(transportConfig) {
     super();
     this.transport = TransportFactory.createTransport(transportConfig);
@@ -10,20 +11,18 @@ class dacqui extends EventEmitter {
 
   async init() {
     await this.transport.init();
-    this.emit('initialized');
+    this.emit(EVENTS.INITIALIZED);
   }
 
   acquireSendData() {
-    // Simulate asynchronous data polling from devices
     const sensorData = {
       timestamp: new Date(),
       value: Math.random() * 100,
     };
 
-    // Send acquired data using the configured transport
     this.transport.sendData(sensorData);
-    this.emit('dataSent', sensorData);
+    this.emit(EVENTS.DATA_SENT, sensorData);
   }
 }
 
-module.exports = dacqui;
+module.exports = Dacqui;
