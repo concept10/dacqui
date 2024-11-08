@@ -15,7 +15,7 @@ class S7Transport extends EventEmitter {
    */
   constructor(host, port) {
     super();
-    this.host = host;
+    this{.host = host;
     this.port = port;
     this.client = new net.Socket();
   }
@@ -28,11 +28,13 @@ class S7Transport extends EventEmitter {
     return new Promise((resolve, reject) => {
       this.client.connect(this.port, this.host, () => {
         console.log('Connected to PLC');
+        this.emit('connected');
         resolve();
       });
 
       this.client.on('error', (err) => {
         console.error('Connection error:', err);
+        this.emit('error', err);
         reject(err);
       });
     });
@@ -52,11 +54,13 @@ class S7Transport extends EventEmitter {
 
       this.client.once('data', (data) => {
         console.log('Connection response:', data);
+        this.emit('connectionResponse', data);
         resolve(data);
       });
 
       this.client.once('error', (err) => {
         console.error('Connection request error:', err);
+        this.emit('error', err);
         reject(err);
       });
     });
@@ -71,10 +75,13 @@ class S7Transport extends EventEmitter {
     const response = await this.sendConnectionRequest();
 
     if (response[5] !== 0xD0) {
-      throw new Error('Failed to establish session');
+      const error = new Error('Failed to establish session');
+      this.emit('error', error);
+      throw error;
     }
 
     console.log('Session established');
+    this.emit('sessionEstablished');
   }
 
   /**
@@ -95,11 +102,13 @@ class S7Transport extends EventEmitter {
 
       this.client.once('data', (data) => {
         console.log('Read response:', data);
+        this.emit('readResponse', data);
         resolve(data);
       });
 
       this.client.once('error', (err) => {
         console.error('Read request error:', err);
+        this.emit('error', err);
         reject(err);
       });
     });
@@ -124,11 +133,13 @@ class S7Transport extends EventEmitter {
 
       this.client.once('data', (data) => {
         console.log('Write response:', data);
+        this.emit('writeResponse', data);
         resolve(data);
       });
 
       this.client.once('error', (err) => {
         console.error('Write request error:', err);
+        this.emit('error', err);
         reject(err);
       });
     });
@@ -147,11 +158,14 @@ class S7Transport extends EventEmitter {
     const response = await this.sendReadRequest(area, dbNumber, start, amount);
 
     if (response[21] !== 0xFF) {
-      throw new Error('Read failed');
+      const error = new Error('Read failed');
+      this.emit('error', error);
+      throw error;
     }
 
     const data = response.slice(25);
     console.log('Read data:', data);
+    this.emit('dataRead', data);
     return data;
   }
 
@@ -169,10 +183,13 @@ class S7Transport extends EventEmitter {
     const response = await this.sendWriteRequest(area, dbNumber, start, amount, value);
 
     if (response[21] !== 0xFF) {
-      throw new Error('Write failed');
+      const error = new Error('Write failed');
+      this.emit('error', error);
+      throw error;
     }
 
     console.log('Write successful');
+    this.emit('dataWritten');
   }
 }
 
