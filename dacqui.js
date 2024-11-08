@@ -1,7 +1,7 @@
 // dacqui.js
 
 const { RuntimeEvents, EVENTS } = require('./events');
-const TransportFactory = require('./transportFactory');
+const TransportFactory = require('./transports/transportFactory');
 
 class Dacqui extends RuntimeEvents {
   constructor(transportConfig) {
