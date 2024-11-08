@@ -1,13 +1,16 @@
 // dataAcquisitionRuntime.js
+const EventEmitter = require('events');
 const TransportFactory = require('./transportFactory');
 
-class daqui {
+class dacqui extends EventEmitter {
   constructor(transportConfig) {
+    super();
     this.transport = TransportFactory.createTransport(transportConfig);
   }
 
   async init() {
     await this.transport.init();
+    this.emit('initialized');
   }
 
   acquireSendData() {
@@ -19,6 +22,7 @@ class daqui {
 
     // Send acquired data using the configured transport
     this.transport.sendData(sensorData);
+    this.emit('dataSent', sensorData);
   }
 }
 
