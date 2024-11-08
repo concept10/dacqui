@@ -19,3 +19,4 @@ const runtime = new dacqui(transportConfig);
 
 // post();
 
+console.log(dacqui)
