@@ -1,6 +1,6 @@
 // transportFactory.js
 
-const TcpTransport = require('./transports/tcpTransport');
+const TcpTransport = require('./tcpTransport');
 // const UdpTransport = require('./transports/udpTransport');
 // const UnixSocketTransport = require('./transports/unixSocketTransport');
 
