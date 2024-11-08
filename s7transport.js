@@ -15,7 +15,7 @@ class S7Transport extends EventEmitter {
    */
   constructor(host, port) {
     super();
-    this{.host = host;
+    this.host = host;
     this.port = port;
     this.client = new net.Socket();
   }
