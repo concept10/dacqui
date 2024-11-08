@@ -1,13 +1,13 @@
 // main.js
 
-const dacqui = require('./daquiRuntime');
+const dacqui = require('./dacqui.js');
 const transportConfig = {
     type: 'tcp',
     host: '127.0.0.1',
     port: '1986',
 };
 
-const runtime = new daqui(transportConfig);
+const runtime = new dacqui(transportConfig);
 
 (async () => {
   await runtime.init();
@@ -17,5 +17,5 @@ const runtime = new daqui(transportConfig);
 }, 5000); // 
 })();
 
-post();
+// post();
 
