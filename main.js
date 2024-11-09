@@ -1,22 +1,31 @@
 // main.js
 
-const dacqui = require('./dacqui.js');
-const transportConfig = {
-    type: 'tcp',
-    host: '127.0.0.1',
-    port: '1986',
+import Transport from './transports/transport.js';
+
+/**
+ * Initializes and runs the main runtime process.
+ * @async
+ * @function
+ * @returns {Promise<void>}
+ */
+const runtime = async () => {
+    
+    
+    const logger = new Logger();
+    await logger.init();
+
+    const transport = new Transport();
+    await transport.init();
+
+    setInterval(() => {
+        transport.acquireSendData();
+    }, 5000);
 };
 
-const runtime = new dacqui(transportConfig);
-
-(async () => {
-  await runtime.init();
-
-  setInterval(() => {
-    runtime.acquireSendData();
-}, 5000); // 
-})();
-
-// post();
-
-console.log(dacqui)
+/**
+ * Entry point of the application.
+ * Catches and logs any errors thrown during the execution of the runtime.
+ * @function
+ * @returns {void}
+ */
+main().catch(console.error);
