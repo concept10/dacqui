@@ -4,7 +4,7 @@
   "description": "dacqui-runtime (improved-succotash)",
   "main": "main.js",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "start": "node main.js"
   },
   "keywords": [
