@@ -1,7 +1,7 @@
 // dacqui.js
 
-const { RuntimeEvents, EVENTS } = require('./events');
-const TransportFactory = require('./transports/transportFactory');
+import { RuntimeEvents, EVENTS } from './events';
+import TransportFactory from './transports/transportFactory';
 
 class Dacqui extends RuntimeEvents {
   constructor(transportConfig) {
@@ -25,4 +25,4 @@ class Dacqui extends RuntimeEvents {
   }
 }
 
-module.exports = Dacqui;
+export default Dacqui;
