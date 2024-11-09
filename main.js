@@ -1,6 +1,6 @@
 // main.js
 
-import Transport from './transports/transport.js';
+import Transport from './src/runtime/transports/transport.js';
 
 /**
  * Initializes and runs the main runtime process.

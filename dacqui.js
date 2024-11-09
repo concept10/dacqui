@@ -1,7 +1,7 @@
 // dacqui.js
 
-import { RuntimeEvents, EVENTS } from './events';
-import TransportFactory from './transports/transportFactory';
+import { RuntimeEvents, EVENTS } from './src/runtime/events';
+import TransportFactory from './src/runtime/transports/transportFactory';
 
 class Dacqui extends RuntimeEvents {
   constructor(transportConfig) {
